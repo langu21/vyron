@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Streetwear fashion item",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Product name" },
+        "description": { "type": "string", "description": "Product description" },
+        "price": { "type": "number", "description": "Price in USD" },
+        "category": { "type": "string", "description": "men, women, unisex" },
+        "type": { "type": "string", "description": "hoodie, tshirt, pants, accessories" },
+        "images": { "type": "array", "items": { "type": "string" }, "description": "List of image URLs" },
+        "sizes": { "type": "array", "items": { "type": "string" }, "description": "Available sizes (S, M, L, XL)" },
+        "stock": { "type": "integer", "description": "Available quantity" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "isNewArrival": { "type": "boolean" },
+        "isBestSeller": { "type": "boolean" },
+        "isSale": { "type": "boolean" },
+        "discountPrice": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "category", "type", "images"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Customer profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "wishlist": { "type": "array", "items": { "type": "string" } },
+        "cart": { "type": "array", "items": { "type": "object" } },
+        "role": { "type": "string", "enum": ["customer", "admin"] }
+      }
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "items": { "type": "array", "items": { "type": "object" } },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "products": {
+      "schema": { "$ref": "Product" },
+      "description": "Collection of streetwear products"
+    },
+    "users": {
+      "schema": { "$ref": "User" },
+      "description": "Customer profiles and PII"
+    },
+    "orders": {
+      "schema": { "$ref": "Order" },
+      "description": "Purchase history"
+    }
+  }
+}
